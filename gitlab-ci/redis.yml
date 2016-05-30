@@ -1,0 +1,19 @@
+default:
+  data:
+    host: redis
+    port: 6379
+    db: 0
+
+  queue:
+    namespace: "sidekiq"
+    host: redis
+    port: 6379
+    db: 2
+
+development:
+
+test:
+
+production:
+
+staging:

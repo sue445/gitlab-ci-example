@@ -1,0 +1,44 @@
+image: drecom/ubuntu-ruby:2.3.0
+
+variables:
+  CAP_USER: "deployer"
+  BUNDLE_CACHE: "vendor/bundle/"
+  RAILS_ENV: "test"
+  CI: "true"
+
+cache:
+  untracked: true
+  key: "$CI_BUILD_NAME"
+  paths:
+    # variables.BUNDLE_CACHEと同じものを指定する
+    - vendor/bundle/
+
+services:
+  - mysql:5.7
+  - redis:2.8
+  - memcached:1.4
+
+before_script:
+  - ./gitlab-ci/setup.sh
+
+stages:
+  - test
+  - deploy
+
+rspec:
+  stage: test
+  script:
+    - ./gitlab-ci/rspec.sh
+
+rubocop:
+  stage: test
+  script:
+    - ./gitlab-ci/rubocop.sh
+  allow_failure: true
+
+deploy_staging:
+  stage: deploy
+  script:
+    - ./gitlab-ci/deploy.sh staging
+  only:
+    - develop
