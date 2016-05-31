@@ -1,4 +1,4 @@
-image: drecom/ubuntu-ruby:2.3.0
+image: drecom/ubuntu-ruby:2.3.1
 
 variables:
   CAP_USER: "deployer"
